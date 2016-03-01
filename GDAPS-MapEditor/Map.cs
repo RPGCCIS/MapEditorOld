@@ -82,9 +82,9 @@ namespace GDAPSMapEditor
 					                      "transparent");
 				}
 			}
-			background = "";
-			parallax = "";
-			superForeground = "";
+			background = "transparent";
+			parallax = "transparent";
+			superForeground = "transparent";
 			entities = new List<Entity>();
 		}
 
