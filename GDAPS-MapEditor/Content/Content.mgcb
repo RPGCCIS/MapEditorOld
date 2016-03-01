@@ -37,12 +37,6 @@
 /processorParam:TextureFormat=Color
 /build:tiles/green.png
 
-#begin Arial.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:Arial.spritefont
-
 #begin right.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -150,10 +144,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:x.png
-
-#begin Aharoni_14.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:Aharoni_14.spritefont
 

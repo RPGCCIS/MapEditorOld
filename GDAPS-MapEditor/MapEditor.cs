@@ -33,6 +33,7 @@ namespace GDAPSMapEditor
 		InputType inputType;
 		bool waitingForText = false;
 		int newWidth;
+		EditMode mode;
 
 		public MapEditor()
 		{
@@ -68,6 +69,7 @@ namespace GDAPSMapEditor
 			save = Content.Load<Texture2D>("save");
 			exit = Content.Load<Texture2D>("exit");
 			string[] tilenames = File.ReadAllLines("Content/tiles.txt");
+			mode = EditMode.Tile;
 			foreach(String tile in tilenames)
 			{
 				tiles[tile] = Content.Load<Texture2D>("tiles/" + tile);
