@@ -67,7 +67,7 @@ namespace GDAPSMapEditor
 			}
 		}
 
-		public const uint MAPEDITOR_VERSION = 3;
+		public const uint MAPEDITOR_VERSION = 4;
 
 		public Map(int width = 32, int height = 32)
 		{
@@ -82,6 +82,10 @@ namespace GDAPSMapEditor
 					                      "transparent");
 				}
 			}
+			background = "";
+			parallax = "";
+			superForeground = "";
+			entities = new List<Entity>();
 		}
 
 		public void SetTile(int x, int y, Tile tile)
@@ -136,6 +140,17 @@ namespace GDAPSMapEditor
 					output.Write(tiles[i,j].Filename);
 				}
 			}
+			output.Write(background);
+			output.Write(parallax);
+			output.Write(superForeground);
+			foreach(Entity e in entities)
+			{
+				output.Write(true);
+				output.Write(e.X);
+				output.Write(e.Y);
+				output.Write(e.Data);
+			}
+			output.Write(false);
 			output.Close();
 		}
 
@@ -155,6 +170,13 @@ namespace GDAPSMapEditor
 				{
 					tiles[i,j] = new Tile((MovementFlags)input.ReadInt32(), input.ReadString());
 				}
+			}
+			background = input.ReadString();
+			parallax = input.ReadString();
+			superForeground = input.ReadString();
+			while(input.ReadBoolean())
+			{
+				entities.Add(new Entity(input.ReadInt32(), input.ReadInt32(), input.ReadString()));
 			}
 			input.Close();
 		}
