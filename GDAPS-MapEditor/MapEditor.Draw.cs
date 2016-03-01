@@ -62,6 +62,21 @@ namespace GDAPSMapEditor
 					                           255/(1 + (!map[i,j].Flags.HasFlag(MovementFlags.DAMAGE) ? 20 : 0))));
 				}
 			}
+			for(int i = 0; i < map.GetEntities().Count; ++i)
+			{
+				spriteBatch.Draw(blank,
+				                 new Rectangle(map.GetEntities()[i].X*64 + cam.X, map.GetEntities()[i].Y*64 + cam.Y, 1, 64),
+				                 Color.Red);
+				spriteBatch.Draw(blank,
+				                 new Rectangle(map.GetEntities()[i].X*64 + cam.X, map.GetEntities()[i].Y*64 + cam.Y, 64, 1),
+				                 Color.Red);
+				spriteBatch.Draw(blank,
+				                 new Rectangle(map.GetEntities()[i].X*64 + cam.X + 63, map.GetEntities()[i].Y*64 + cam.Y, 1, 64),
+				                 Color.Red);
+				spriteBatch.Draw(blank,
+				                 new Rectangle(map.GetEntities()[i].X*64 + cam.X, map.GetEntities()[i].Y*64 + cam.Y + 63, 64, 1),
+				                 Color.Red);
+			}
 			//draw the sidebar and bottom bar
 			spriteBatch.Draw(blank,
 			                 new Rectangle(GraphicsDevice.Viewport.Width - 96, 0, 96, GraphicsDevice.Viewport.Height),
@@ -72,7 +87,7 @@ namespace GDAPSMapEditor
 			                               GraphicsDevice.Viewport.Width - 96,
 			                               96),
 			                 Color.LightGray);
-			//draw the sidebar items
+			//draw the sidebar items/state dependent objects
 			switch(mode)
 			{
 				case EditMode.Tile:
@@ -87,6 +102,14 @@ namespace GDAPSMapEditor
 						                 Color.White);
 						++k;
 					}
+					break;
+				case EditMode.BG:
+					break;
+				case EditMode.Parallax:
+					break;
+				case EditMode.SFG:
+					break;
+				case EditMode.Entity:
 					break;
 			}
 			//draw the bottom bar items

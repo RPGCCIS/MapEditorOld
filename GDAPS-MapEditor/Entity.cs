@@ -44,7 +44,7 @@ namespace GDAPSMapEditor
 			}
 		}
 
-		public Entity(int x, int y, String data)
+		public Entity(int x, int y, String data = "")
 		{
 			this.x = x;
 			this.y = y;

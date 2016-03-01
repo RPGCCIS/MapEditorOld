@@ -103,6 +103,11 @@ namespace GDAPSMapEditor
 			entities.Add(e);
 		}
 
+		public List<Entity> GetEntities()
+		{
+			return entities;
+		}
+
 		public void DeleteEntity(int x, int y)
 		{
 			for(int i = 0; i < entities.Count; ++i)

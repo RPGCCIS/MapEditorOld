@@ -53,6 +53,10 @@ namespace GDAPSMapEditor
 						waitingForText = true;
 						inputType = InputType.Height;
 					}
+					else if(inputType == InputType.Entity)
+					{
+						
+					}
 					else
 					{
 						map = new Map(newWidth, Int32.Parse(textInput));
@@ -60,11 +64,11 @@ namespace GDAPSMapEditor
 					}
 				}
 			}
-			else
+			switch(mode)
 			{
-				switch(mode)
-				{
-					case EditMode.Tile:
+				case EditMode.Tile:
+					if(!waitingForText)
+					{
 						try
 						{
 							active = map[(Mouse.GetState().X - cam.X)/64,(Mouse.GetState().Y - cam.Y)/64];
@@ -101,67 +105,90 @@ namespace GDAPSMapEditor
 								                     tileList.Count - 1);
 							}
 						}
-						break;
-				}
-				//select something from the sidebar or bottom bar
-				if(LButton == ButtonState.Pressed && prevLButton == ButtonState.Released)
-				{
-					if(Mouse.GetState().Y > GraphicsDevice.Viewport.Height - 96)
+					}
+					break;
+				case EditMode.Entity:
+					if(RButton == ButtonState.Pressed && prevRButton == ButtonState.Released)
 					{
-						if(Mouse.GetState().Y < GraphicsDevice.Viewport.Height - 64)
+						map.DeleteEntity((Mouse.GetState().X - cam.X)/64, (Mouse.GetState().Y - cam.Y)/64);
+					}
+					if(LButton == ButtonState.Pressed && prevLButton == ButtonState.Released)
+					{
+						activeEntity = new Entity((Mouse.GetState().X - cam.X)/64, (Mouse.GetState().Y - cam.Y)/64);
+						entityList.Add(activeEntity);
+						textInput = "";
+					}
+					if(activeEntity != null)
+					{
+						activeEntity.Data = textInput;
+					}
+					break;
+			}
+			//select something from the sidebar or bottom bar
+			if(LButton == ButtonState.Pressed && prevLButton == ButtonState.Released && (!waitingForText || mode == EditMode.Entity))
+			{
+				if(Mouse.GetState().Y > GraphicsDevice.Viewport.Height - 96)
+				{
+					if(Mouse.GetState().Y < GraphicsDevice.Viewport.Height - 64)
+					{
+						if(Mouse.GetState().X < 140 && !waitingForText)
 						{
-							if(Mouse.GetState().X < 140 && !waitingForText)
-							{
-								mode = EditMode.Tile;
-							}
-							else if(Mouse.GetState().X < 281 && !waitingForText)
-							{
-								mode = EditMode.BG;
-							}
-							else if(Mouse.GetState().X < 422 && !waitingForText)
-							{
-								mode = EditMode.Parallax;
-							}
-							else if(Mouse.GetState().X < 563 && !waitingForText)
-							{
-								mode = EditMode.SFG;
-							}
-							else if(Mouse.GetState().X < 704 && !waitingForText)
-							{
-								mode = EditMode.Entity;
-							}
+							mode = EditMode.Tile;
 						}
-						else
+						else if(Mouse.GetState().X < 281 && !waitingForText)
 						{
-							if(Mouse.GetState().X < 64 && !waitingForText)
-							{
-								textInput = "";
-								message = "Enter a width for the new map";
-								waitingForText = true;
-								inputType = InputType.Width;
-							}
-							else if(Mouse.GetState().X < 128)
-							{
-								textInput = "";
-								message = "Enter the name of a map to open (no extension)";
-								waitingForText = true;
-								inputType = InputType.Loading;
-							}
-							else if(Mouse.GetState().X < 196)
-							{
-								textInput = "";
-								message = "Enter the name to save this map as (no extension)";
-								waitingForText = true;
-								inputType = InputType.Saving;
-							}
-							else if(Mouse.GetState().X < 260)
-							{
-								Exit();
-							}
+							mode = EditMode.BG;
+						}
+						else if(Mouse.GetState().X < 422 && !waitingForText)
+						{
+							mode = EditMode.Parallax;
+						}
+						else if(Mouse.GetState().X < 563 && !waitingForText)
+						{
+							mode = EditMode.SFG;
+						}
+						else if(Mouse.GetState().X < 704 && !waitingForText)
+						{
+							mode = EditMode.Entity;
+							textInput = "";
+							message = "Click to create an entity, then edit it";
+							waitingForText = true;
+							inputType = InputType.Entity;
+						}
+					}
+					else
+					{
+						if(Mouse.GetState().X < 64 && !waitingForText)
+						{
+							textInput = "";
+							message = "Enter a width for the new map";
+							waitingForText = true;
+							inputType = InputType.Width;
+						}
+						else if(Mouse.GetState().X < 128)
+						{
+							textInput = "";
+							message = "Enter the name of a map to open (no extension)";
+							waitingForText = true;
+							inputType = InputType.Loading;
+						}
+						else if(Mouse.GetState().X < 196)
+						{
+							textInput = "";
+							message = "Enter the name to save this map as (no extension)";
+							waitingForText = true;
+							inputType = InputType.Saving;
+						}
+						else if(Mouse.GetState().X < 260)
+						{
+							Exit();
 						}
 					}
 				}
+			}
 
+			if(!waitingForText)
+			{
 				//drag the map around with the middle button
 				if(MButton == ButtonState.Pressed)
 				{

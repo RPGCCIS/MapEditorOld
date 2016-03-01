@@ -38,6 +38,8 @@ namespace GDAPSMapEditor
 		bool waitingForText = false;
 		int newWidth;
 		EditMode mode;
+		List<Entity> entityList;
+		Entity activeEntity;
 
 		public MapEditor()
 		{
@@ -77,6 +79,7 @@ namespace GDAPSMapEditor
 			chooseParallax = Content.Load<Texture2D>("parallax");
 			chooseSFG = Content.Load<Texture2D>("superForeground");
 			editEntities = Content.Load<Texture2D>("entities");
+			entityList = new List<Entity>();
 			string[] tilenames = File.ReadAllLines("Content/map_assets/tiles.txt");
 			string[] backgroundnames = File.ReadAllLines("Content/map_assets/backgrounds.txt");
 			string[] parallaxnames = File.ReadAllLines("Content/map_assets/parallaxes.txt");
