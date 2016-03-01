@@ -2,12 +2,12 @@
 
 namespace GDAPSMapEditor
 {
-	public enum InputType
+	public enum EditMode
 	{
-		Saving,
-		Loading,
-		Width,
-		Height,
+		Tile,
+		BG,
+		Parallax,
+		SFG,
 		Entity
 	}
 }

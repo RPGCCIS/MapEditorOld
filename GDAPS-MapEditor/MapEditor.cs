@@ -11,7 +11,7 @@ using System.Collections.Generic;
 #endregion
 namespace GDAPSMapEditor
 {
-	public class MapEditor : Game
+	public partial class MapEditor : Game
 	{
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;

@@ -10,6 +10,10 @@ namespace GDAPSMapEditor
 		private Tile[,] tiles;
 		private int width;
 		private int height;
+		private String superForeground;
+		private String parallax;
+		private String background;
+		List<Entity> entities;
 
 		public int Width
 		{
@@ -24,6 +28,42 @@ namespace GDAPSMapEditor
 			get
 			{
 				return height;
+			}
+		}
+
+		public String SuperForeground
+		{
+			get
+			{
+				return superForeground;
+			}
+			set
+			{
+				superForeground = value;
+			}
+		}
+
+		public String Parallax
+		{
+			get
+			{
+				return parallax;
+			}
+			set
+			{
+				parallax = value;
+			}
+		}
+
+		public String Background
+		{
+			get
+			{
+				return background;
+			}
+			set
+			{
+				background = value;
 			}
 		}
 
@@ -52,6 +92,22 @@ namespace GDAPSMapEditor
 		public Tile GetTile(int x, int y)
 		{
 			return tiles[x,y];
+		}
+
+		public void AddEntity(Entity e)
+		{
+			entities.Add(e);
+		}
+
+		public void DeleteEntity(int x, int y)
+		{
+			for(int i = 0; i < entities.Count; ++i)
+			{
+				if(entities[i].X == x && entities[i].Y == y)
+				{
+					entities.RemoveAt(i);
+				}
+			}
 		}
 
 		public Tile this[int x, int y]

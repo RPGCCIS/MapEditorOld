@@ -151,3 +151,9 @@
 /processorParam:TextureFormat=Color
 /build:x.png
 
+#begin Aharoni_14.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Aharoni_14.spritefont
+

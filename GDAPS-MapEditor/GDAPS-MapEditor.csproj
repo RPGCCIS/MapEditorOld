@@ -81,7 +81,8 @@
     <Compile Include="Tile.cs" />
     <Compile Include="MovementFlags.cs" />
     <MonoGameContentReference Include="Content\Content.mgcb" />
-    <Compile Include="InputType.cs" />
+    <Compile Include="EditMode.cs" />
+    <Compile Include="Entity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Icon.png" />
