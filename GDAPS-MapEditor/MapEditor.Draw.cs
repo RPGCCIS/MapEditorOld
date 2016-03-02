@@ -11,8 +11,38 @@ namespace GDAPSMapEditor
 		protected override void Draw(GameTime gameTime)
 		{
 			graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
-			spriteBatch.Begin();
 			Window.Title = textInput == "" && waitingForText ? message : textInput;
+			spriteBatch.Begin();
+			if(map.Background != "transparent")
+			{
+				spriteBatch.Draw(backgrounds[map.Background],
+				                 new Rectangle(0,
+				                               0,
+				                               GraphicsDevice.Viewport.Width - 96,
+				                               GraphicsDevice.Viewport.Height - 96),
+				                 Color.White);
+			}
+			if(map.Parallax != "transparent")
+			{
+				spriteBatch.Draw(parallaxes[map.Parallax],
+				                 new Rectangle(0,
+				                               0,
+				                               GraphicsDevice.Viewport.Width - 96,
+				                               GraphicsDevice.Viewport.Height - 96),
+				                 Color.White);
+			}
+			if(map.SuperForeground != "transparent")
+			{
+				spriteBatch.Draw(superForegrounds[map.SuperForeground],
+				                 new Rectangle(0,
+				                               0,
+				                               GraphicsDevice.Viewport.Width - 96,
+				                               GraphicsDevice.Viewport.Height - 96),
+				                 new Color(255,
+				                           255,
+				                           255,
+				                           100));
+			}
 			for(int i = -cam.X/64; i < Math.Min(map.Width, (GraphicsDevice.Viewport.Width - cam.X - 32)/64); ++i)
 			{
 				for(int j = -cam.Y/64; j < Math.Min(map.Height, (GraphicsDevice.Viewport.Height - cam.Y - 32)/64); ++j)
@@ -104,10 +134,63 @@ namespace GDAPSMapEditor
 					}
 					break;
 				case EditMode.BG:
+					if(map.Background != "transparent")
+					{
+						spriteBatch.Draw(blank,
+						                 new Rectangle(GraphicsDevice.Viewport.Width - 96 + (backgroundindex%2)*48,
+						                               (tileindex/2)*48,
+						                               48,
+						                               48),
+						                 Color.Red);
+					}
+					int m = 0;
+					foreach(KeyValuePair<String, Texture2D> background in backgroundList)
+					{
+						spriteBatch.Draw(background.Value,
+						                 new Rectangle(GraphicsDevice.Viewport.Width - 94 + (m%2)*48, 2 + (m/2)*48, 44, 44),
+						                 Color.White);
+						++m;
+					}
 					break;
 				case EditMode.Parallax:
+					if(map.Parallax != "transparent")
+					{
+						spriteBatch.Draw(blank,
+						                 new Rectangle(GraphicsDevice.Viewport.Width - 96 + (parallaxindex%2)*48,
+						                               (parallaxindex/2)*48,
+						                               48,
+						                               48),
+						                 Color.Red);
+					}
+					int n = 0;
+					foreach(KeyValuePair<String, Texture2D> parallax in parallaxList)
+					{
+						spriteBatch.Draw(parallax.Value,
+						                 new Rectangle(GraphicsDevice.Viewport.Width - 94 + (n%2)*48,
+						                               2 + (n/2)*48,
+						                               44,
+						                               44), Color.White);
+						++n;
+					}
 					break;
 				case EditMode.SFG:
+					if(map.SuperForeground != "transparent")
+					{
+						spriteBatch.Draw(blank,
+						                 new Rectangle(GraphicsDevice.Viewport.Width - 96 + (sfgindex%2)*48,
+						                               (sfgindex/2)*48,
+						                               48,
+						                               48),
+						                 Color.Red);
+					}
+					int o = 0;
+					foreach(KeyValuePair<String, Texture2D> sfg in sfgList)
+					{
+						spriteBatch.Draw(sfg.Value,
+						                 new Rectangle(GraphicsDevice.Viewport.Width - 94 + (o%2)*48, 2 + (o/2)*48, 44, 44),
+						                 Color.White);
+						++o;
+					}
 					break;
 				case EditMode.Entity:
 					break;

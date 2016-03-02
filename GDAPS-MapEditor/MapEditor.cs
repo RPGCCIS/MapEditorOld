@@ -22,11 +22,17 @@ namespace GDAPSMapEditor
 		Texture2D editTiles, chooseBG, chooseParallax, chooseSFG, editEntities;
 		Map map;
 		Dictionary<String, Texture2D> tiles;
-		Dictionary<String, Texture2D> background;
+		Dictionary<String, Texture2D> backgrounds;
 		Dictionary<String, Texture2D> parallaxes;
 		Dictionary<String, Texture2D> superForegrounds;
 		int tileindex = 0;
+		int backgroundindex = 0;
+		int parallaxindex = 0;
+		int sfgindex = 0;
 		List<KeyValuePair<String,Texture2D>> tileList;
+		List<KeyValuePair<String, Texture2D>> backgroundList;
+		List<KeyValuePair<String, Texture2D>> parallaxList;
+		List<KeyValuePair<String, Texture2D>> sfgList;
 		ButtonState LButton, RButton, MButton, prevLButton, prevRButton, prevMButton;
 		bool l, r, u, d, b, pl, pr, pu, pd, pb;
 		Point cam = new Point(0, 0);
@@ -38,7 +44,6 @@ namespace GDAPSMapEditor
 		bool waitingForText = false;
 		int newWidth;
 		EditMode mode;
-		List<Entity> entityList;
 		Entity activeEntity;
 
 		public MapEditor()
@@ -47,7 +52,13 @@ namespace GDAPSMapEditor
 			Content.RootDirectory = "Content";	            
 			graphics.IsFullScreen = true;		
 			tiles = new Dictionary<string, Texture2D>();
+			backgrounds = new Dictionary<string, Texture2D>();
+			parallaxes = new Dictionary<string, Texture2D>();
+			superForegrounds = new Dictionary<string, Texture2D>();
 			tileList = new List<KeyValuePair<string, Texture2D>>();
+			backgroundList = new List<KeyValuePair<string, Texture2D>>();
+			parallaxList = new List<KeyValuePair<string, Texture2D>>();
+			sfgList = new List<KeyValuePair<string, Texture2D>>();
 		}
 
 		protected override void Initialize()
@@ -79,7 +90,6 @@ namespace GDAPSMapEditor
 			chooseParallax = Content.Load<Texture2D>("parallax");
 			chooseSFG = Content.Load<Texture2D>("superForeground");
 			editEntities = Content.Load<Texture2D>("entities");
-			entityList = new List<Entity>();
 			string[] tilenames = File.ReadAllLines("Content/map_assets/tiles.txt");
 			string[] backgroundnames = File.ReadAllLines("Content/map_assets/backgrounds.txt");
 			string[] parallaxnames = File.ReadAllLines("Content/map_assets/parallaxes.txt");
@@ -91,6 +101,30 @@ namespace GDAPSMapEditor
 			foreach(KeyValuePair<String, Texture2D> tile in tiles)
 			{
 				tileList.Add(tile);
+			}
+			foreach(String background in backgroundnames)
+			{
+				backgrounds[background] = Content.Load<Texture2D>("map_assets/" + background);
+			}
+			foreach(KeyValuePair<String, Texture2D> background in backgrounds)
+			{
+				backgroundList.Add(background);
+			}
+			foreach(String parallax in parallaxnames)
+			{
+				parallaxes[parallax] = Content.Load<Texture2D>("map_assets/" + parallax);
+			}
+			foreach(KeyValuePair<String, Texture2D> parallax in parallaxes)
+			{
+				parallaxList.Add(parallax);
+			}
+			foreach(String sfg in superforegroundnames)
+			{
+				superForegrounds[sfg] = Content.Load<Texture2D>("map_assets/" + sfg);
+			}
+			foreach(KeyValuePair<String, Texture2D> sfg in superForegrounds)
+			{
+				sfgList.Add(sfg);
 			}
 			tiles["nulltex"] = nulltex;
 			mode = EditMode.Tile;

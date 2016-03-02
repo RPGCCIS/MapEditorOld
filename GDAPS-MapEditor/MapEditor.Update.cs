@@ -107,6 +107,30 @@ namespace GDAPSMapEditor
 						}
 					}
 					break;
+				case EditMode.BG:
+					if(Mouse.GetState().X > GraphicsDevice.Viewport.Width - 96 && LButton == ButtonState.Pressed && prevLButton == ButtonState.Released)
+					{
+						backgroundindex = Math.Min((Mouse.GetState().Y/48)*2 + (Mouse.GetState().X > GraphicsDevice.Viewport.Width - 96 + 48 ? 1 : 0),
+						                           backgroundList.Count - 1);
+						map.Background = backgroundList[backgroundindex].Key;
+					}
+					break;
+				case EditMode.Parallax:
+					if(Mouse.GetState().X > GraphicsDevice.Viewport.Width - 96 && LButton == ButtonState.Pressed && prevLButton == ButtonState.Released)
+					{
+						parallaxindex = Math.Min((Mouse.GetState().Y/48)*2 + (Mouse.GetState().X > GraphicsDevice.Viewport.Width - 96 + 48 ? 1 : 0),
+						                         parallaxList.Count - 1);
+						map.Parallax = parallaxList[parallaxindex].Key;
+					}
+					break;
+				case EditMode.SFG:
+					if(Mouse.GetState().X > GraphicsDevice.Viewport.Width - 96 && LButton == ButtonState.Pressed && prevLButton == ButtonState.Released)
+					{
+						sfgindex = Math.Min((Mouse.GetState().Y/48)*2 + (Mouse.GetState().X > GraphicsDevice.Viewport.Width - 96 + 48 ? 1 : 0),
+						                    sfgList.Count - 1);
+						map.SuperForeground = sfgList[sfgindex].Key;
+					}
+					break;
 				case EditMode.Entity:
 					if(Mouse.GetState().X < GraphicsDevice.Viewport.Width - 96 && Mouse.GetState().Y < GraphicsDevice.Viewport.Height - 96)
 					{
